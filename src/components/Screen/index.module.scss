@@ -1,0 +1,29 @@
+@import '../variable.module.scss';
+
+.screen_container {
+  padding: 45px 0;
+
+  .screenDiv {
+    display: flex;
+    justify-content: center;
+
+    .screen {
+      overflow: hidden;
+      height: $screen_height;
+      width: $screen_width;
+      background-image: url('../../images/wallpapers/ios.jpeg');
+      background-size: cover;
+      background-repeat: no-repeat;
+    }
+
+    .overlay {
+      position: absolute;
+      background-color: rgba(255, 255, 255, 0.5);
+      height: $screen_height;
+      width: $screen_width;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+  }
+}

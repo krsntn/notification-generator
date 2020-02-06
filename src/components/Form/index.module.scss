@@ -1,0 +1,32 @@
+.container {
+  padding: 0 20px 20px 20px;
+  text-align: left;
+
+  .app_div {
+    display: flex;
+    justify-content: flex-start;
+
+    .app_box {
+      padding: 5px;
+      margin: 0 3px;
+      border-radius: 6px;
+      cursor: pointer;
+
+      &:hover {
+        background-color: #eee;
+      }
+
+      &:active {
+        background-color: #ddd;
+      }
+
+      &[data-selected='true'] {
+        background-color: #ddd;
+      }
+
+      .app_logo {
+        width: 50px;
+      }
+    }
+  }
+}

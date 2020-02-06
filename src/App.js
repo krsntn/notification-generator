@@ -1,25 +1,30 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import Screen from './components/Screen';
+import css from './App.module.scss';
+import Form from './components/Form';
+import { Provider } from 'react-redux';
+import { store } from './redux/store';
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
+    <Provider store={store}>
+      <div className={`container-fluid ${css.App}`}>
+        <div className="row">
+          <div className="col-md-7">
+            <div className={`${css.title} text-primary`}>
+              Lock Screen Notification Generator
+            </div>
+            <Form></Form>
+          </div>
+          <div className="col-md-5">
+            <Screen></Screen>
+          </div>
+        </div>
+        <p className={css.disclaimer}>
+          Made by <a href="https://github.com/krsntn">Karson</a>.
         </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+      </div>
+    </Provider>
   );
 }
 
