@@ -39,7 +39,10 @@ const Screen = () => {
   const downloadImg = () => {
     const screen = document.querySelector('#screen');
 
-    html2canvas(screen).then(canvas => {
+    html2canvas(screen, {
+      scrollX: -window.scrollX,
+      scrollY: -window.scrollY,
+    }).then(canvas => {
       saveAs(canvas.toDataURL(), 'screen-shot.png');
     });
   };
