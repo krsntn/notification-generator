@@ -18,13 +18,13 @@ const Months = [
 ];
 
 const Weeks = [
+  'Sunday',
   'Monday',
   'Tuesday',
   'Wednesday',
   'Thursday',
   'Friday',
   'Saturday',
-  'Sunday',
 ];
 
 const DateTime = () => {
@@ -38,7 +38,7 @@ const DateTime = () => {
     >
       <div className={css.time}>{time}</div>
       <div className={css.date}>
-        {`${Weeks[newDate.getDay() - 1]}, ${newDate.getDate()} ${
+        {`${Weeks[newDate.getDay()]}, ${newDate.getDate()} ${
           Months[newDate.getMonth()]
         }`}
       </div>
