@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import css from './index.module.scss';
 import StatusBar from '../StatusBar';
 import DateTime from '../DateTime';
@@ -10,6 +10,7 @@ import html2canvas from 'html2canvas';
 const Screen = () => {
   const notifications = useSelector(state => state.notifications);
   const { file: wallpaper } = useSelector(state => state.wallpaper);
+  const [displayWallpaper, setDisplayWallpaper] = useState(wallpaper);
 
   useEffect(() => {
     document
@@ -18,6 +19,7 @@ const Screen = () => {
     document
       .querySelector('#overlay')
       .addEventListener('mouseleave', hideOverlay);
+    document.querySelector('#wallpaper').addEventListener('load', hideLoading);
     return () => {
       document
         .querySelector('#screen')
@@ -25,8 +27,18 @@ const Screen = () => {
       document
         .querySelector('#overlay')
         .removeEventListener('mouseleave', hideOverlay);
+      document
+        .querySelector('#wallpaper')
+        .removeEventListener('load', hideLoading);
     };
   }, []);
+
+  useEffect(() => {
+    document.querySelector('#loading').style.display = '';
+    import(`../../images/wallpapers/${wallpaper}`).then(module => {
+      setDisplayWallpaper(module.default);
+    });
+  }, [wallpaper]);
 
   function showOverlay() {
     document.querySelector('#overlay').style.display = '';
@@ -34,6 +46,10 @@ const Screen = () => {
 
   function hideOverlay() {
     document.querySelector('#overlay').style.display = 'none';
+  }
+
+  function hideLoading() {
+    document.querySelector('#loading').style.display = 'none';
   }
 
   const downloadImg = () => {
@@ -69,26 +85,39 @@ const Screen = () => {
 
   return (
     <div className={css.screen_container}>
-      <div className={css.screenDiv}>
-        <div
-          id="screen"
-          className={css.screen}
-          style={{
-            backgroundImage: `url("${require('../../images/wallpapers/' +
-              wallpaper)}")`,
-          }}
-        >
-          <StatusBar />
-          <DateTime />
-          {notifications.map((item, index) => (
-            <Notification key={index} from={item.from} content={item.content} />
-          ))}
-        </div>
-        <div id="overlay" className={css.overlay} style={{ display: 'none' }}>
-          <div>
-            <button className="btn btn-secondary btn-lg" onClick={downloadImg}>
-              Download
-            </button>
+      <div className={css.screen_border}>
+        <div className={css.screenDiv}>
+          <div id="screen" className={css.screen}>
+            <img
+              id="wallpaper"
+              className={css.wallpaper}
+              alt="wallpaper"
+              src={displayWallpaper}
+            />
+            <StatusBar />
+            <DateTime />
+            {notifications.map((item, index) => (
+              <Notification
+                key={index}
+                from={item.from}
+                content={item.content}
+              />
+            ))}
+          </div>
+          <div id="overlay" className={css.overlay} style={{ display: 'none' }}>
+            <div>
+              <button
+                className="btn btn-secondary btn-lg"
+                onClick={downloadImg}
+              >
+                Download
+              </button>
+            </div>
+          </div>
+          <div id="loading" className={css.overlay}>
+            <div className="spinner-border" role="status">
+              <span className="sr-only">Loading...</span>
+            </div>
           </div>
         </div>
       </div>

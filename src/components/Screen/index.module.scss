@@ -3,24 +3,41 @@
 .screen_container {
   padding: 45px 0;
 
+  .screen_border {
+    border: $phone_border solid #444;
+    border-radius: calc(#{$phone_border} * 2);
+    height: $screen_height;
+    width: $screen_width;
+    margin: auto;
+    position: relative;
+  }
+
+  @mixin maxContent {
+    height: 100%;
+    width: 100%;
+  }
+
   .screenDiv {
-    display: flex;
-    justify-content: center;
+    @include maxContent;
 
     .screen {
-      overflow: hidden;
-      height: $screen_height;
-      width: $screen_width;
-      background-image: url('../../images/wallpapers/ios.jpeg');
-      background-size: cover;
-      background-repeat: no-repeat;
+      @include maxContent;
+
+      .wallpaper {
+        @include maxContent;
+        object-fit: cover;
+        position: absolute;
+        z-index: -1;
+        top: 0;
+        left: 0;
+      }
     }
 
     .overlay {
+      @include maxContent;
       position: absolute;
+      top: 0;
       background-color: rgba(255, 255, 255, 0.5);
-      height: $screen_height;
-      width: $screen_width;
       display: flex;
       justify-content: center;
       align-items: center;
